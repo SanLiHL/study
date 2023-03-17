@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="com.study.springboot.mybatis.dao.StudentsDao">
+
+        <resultMap id="student" type="com.study.springboot.mybatis.jojo.Students">
+            <id column="id" property="id"></id>
+            <result column="name" property="name"></result>
+            <result column="sex" property="sex"></result>
+            <result column="cardId" property="cardId"></result>
+            <association property="studentcard" column="cardId" resultMap="studentcard"/>
+            <collection property="labelList" column="id" resultMap="label"></collection>
+        </resultMap>
+
+        <resultMap id="studentcard" type="com.study.springboot.mybatis.jojo.Studentcard">
+            <id column="id" property="id"></id>
+            <result column="studentId" property="studentId"></result>
+            <result column="startDate" property="startDate"></result>
+            <result column="endDate" property="endDate"></result>
+        </resultMap>
+
+        <resultMap id="label" type="com.study.springboot.mybatis.jojo.Label">
+            <id column="id" property="id"></id>
+            <result column="student_id" property="studentId"></result>
+            <result column="label" property="label"></result>
+        </resultMap>
+
+        <select id="selectXml" resultMap="student">
+            select * from students
+        </select>
+
+        <update id="update">
+            update students
+            <set>
+                <if test="name!=null and name!=''">
+                    name = #{name},
+                </if>
+                <if test="cardId!=null and cardId!=''">
+                    cardId = #{cardId},
+                </if>
+            </set>
+            where id =#{id}
+        </update>
+
+    <insert id="insertXml" parameterType="com.study.springboot.mybatis.jojo.Students">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into students (name,sex,cardId) values (#{name},#{sex},#{cardId})
+    </insert>
+
+
+</mapper>

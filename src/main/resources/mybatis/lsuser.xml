@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="com.study.springboot.mybatis.dao.LsuserDao">
+    <resultMap id="lsuser" type="com.study.springboot.mybatis.jojo.Lsuser">
+        <id column="USERCODE" property="usercode"></id>
+        <result column="USERNAME" property="USERNAME"></result>
+        <result column="COMCODE" property="COMCODE"></result>
+        <result column="USERDESCRIPTION" property="USERDESCRIPTION"></result>
+        <result column="USERSTATE" property="USERSTATE"></result>
+        <result column="USERTYPE" property="USERTYPE"></result>
+        <result column="SEX" property="SEX"></result>
+        <result column="PHONE" property="PHONE"></result>
+        <association property="lsuserext" column="USERCODE" javaType="com.study.springboot.mybatis.jojo.Lsuserext" select="selectExt"/>
+    </resultMap>
+
+    <resultMap id="lsuserext" type="com.study.springboot.mybatis.jojo.Lsuserext">
+        <id column="USERCODE" property="usercode"></id>
+        <result column="IDCard" property="IDCard"></result>
+        <result column="LicenseDate" property="LicenseDate"></result>
+    </resultMap>
+
+    <select id="select" resultMap="lsuser">
+        select * from lsuser;
+    </select>
+
+    <select id="selectBy" resultMap="lsuser">
+        select * from lsuser
+        where 1=1
+        <if test="UserCode !=null and UserCode!=''" >
+            and UserCode = #{UserCode}
+        </if>
+        <if test="UserName !=null and UserName!=''" >
+            and UserName = like concat('%',#{UserName},'%')
+        </if>
+    </select>
+
+    <select id="selectExt" resultType="com.study.springboot.mybatis.jojo.Lsuserext">
+        select * from lsuserext where 1=1
+        <if test="UserCode !=null and UserCode!=''">
+            and usercode = #{usercode}
+        </if>
+    </select>
+
+
+</mapper>
