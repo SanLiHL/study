@@ -83,7 +83,10 @@
             <!-- 特别注意版本问题 -->
             <version>1.2.3</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
 
     </dependencies>
 

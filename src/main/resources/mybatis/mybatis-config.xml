@@ -17,5 +17,6 @@
     <mappers>
         <mapper resource="./mybatis/lsuser.xml"/>
         <mapper resource="./mybatis/students.xml"/>
+        <mapper resource="./mybatis/ConsultationFileMapper.xml"/>
     </mappers>
 </configuration>
